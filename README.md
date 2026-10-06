@@ -66,3 +66,10 @@ if you supply a `hash_fn` that maps everything to a single integer, every
 key ends up in one bucket and the structure degenerates into a list —
 correct, but no longer trie-shaped. This is by design; sanity-check your
 hash function if it matters.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
